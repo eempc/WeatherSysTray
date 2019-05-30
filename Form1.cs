@@ -25,42 +25,42 @@ namespace WeatherSysTray0 {
         public Form1() {
             InitializeComponent();
 
-            this.componentSysTray = new Container();
-            this.contextMenu = new ContextMenu();
-            this.menuItem0 = new MenuItem();
-            this.menuItem1 = new MenuItem();
+            //this.componentSysTray = new Container();
+            //this.contextMenu = new ContextMenu();
+            //this.menuItem0 = new MenuItem();
+            //this.menuItem1 = new MenuItem();
 
-            // Init context menu with an array as argument
-            this.contextMenu.MenuItems.AddRange(new MenuItem[] { this.menuItem0, this.menuItem1 });
+            //// Init context menu with an array as argument
+            //this.contextMenu.MenuItems.AddRange(new MenuItem[] { this.menuItem0, this.menuItem1 });
 
-            // Init menu item(s)
-            this.menuItem0.Index = 0;
-            this.menuItem0.Text = "Exit";
-            this.menuItem0.Click += new EventHandler(menuItem0_Click);
+            //// Init menu item(s)
+            //this.menuItem0.Index = 0;
+            //this.menuItem0.Text = "Exit";
+            //this.menuItem0.Click += new EventHandler(menuItem0_Click);
 
-            this.menuItem1.Index = 1;
-            menuItem1.Text = "Change";
-            menuItem1.Click += new EventHandler(menuItem1_Click);
+            //this.menuItem1.Index = 1;
+            //menuItem1.Text = "Change";
+            //menuItem1.Click += new EventHandler(menuItem1_Click);
 
-            // Form display
-            this.ClientSize = new Size(292, 266);
-            this.Text = "Notify icon example";
+            //// Form display
+            //this.ClientSize = new Size(292, 266);
+            //this.Text = "Notify icon example";
 
-            // Create notify icon
-            notifyIcon = new NotifyIcon(componentSysTray);
-            notifyIcon.Icon = new Icon("test.ico"); // Stream can be an argument <- the key line is here
+            //// Create notify icon
+            //notifyIcon = new NotifyIcon(componentSysTray);
+            //notifyIcon.Icon = new Icon("test.ico"); // Stream can be an argument <- the key line is here
 
-            // https://stackoverflow.com/questions/42970608/c-sharp-dynamically-change-notifyicon-image-in-tray
+            //// https://stackoverflow.com/questions/42970608/c-sharp-dynamically-change-notifyicon-image-in-tray
 
-            // Context menu right click
-            notifyIcon.ContextMenu = this.contextMenu;
+            //// Context menu right click
+            //notifyIcon.ContextMenu = this.contextMenu;
 
-            // Tool tip text
-            notifyIcon.Text = "Notify example";
-            notifyIcon.Visible = true;
+            //// Tool tip text
+            //notifyIcon.Text = "Notify example";
+            //notifyIcon.Visible = true;
 
-            // Double click handler to activate form
-            notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);                   
+            //// Double click handler to activate form
+            //notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);                   
         }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e) {
