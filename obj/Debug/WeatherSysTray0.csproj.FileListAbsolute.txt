@@ -1,0 +1,9 @@
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.csprojAssemblyReference.cache
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.Properties.Resources.resources
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.csproj.GenerateResource.cache
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.csproj.CoreCompileInputs.cache
+D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\WeatherSysTray0.exe.config
+D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\WeatherSysTray0.exe
+D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\WeatherSysTray0.pdb
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.exe
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.pdb
