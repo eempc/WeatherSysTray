@@ -30,7 +30,7 @@ namespace WeatherSysTray0 {
             this.menuItem0 = new MenuItem();
             this.menuItem1 = new MenuItem();
 
-            // Init context menu
+            // Init context menu with an array as argument
             this.contextMenu.MenuItems.AddRange(new MenuItem[] { this.menuItem0, this.menuItem1 });
 
             // Init menu item(s)
@@ -72,13 +72,47 @@ namespace WeatherSysTray0 {
             this.Close();
         }
 
+        // Also dynamic change icon
         private void menuItem1_Click(object sender, EventArgs e) {
+            DrawStringBmp();
+        }
+
+        private void DrawStringBmp() {
+            string txt = "98";
+            //int fontSize = 32;
+            int bmpSize = 48;
+            Font font = new Font("Arial", 30, GraphicsUnit.Pixel);
+            Color myColour = Color.FromName("White");
+
+            Bitmap bmp = new Bitmap(bmpSize, bmpSize);
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            Brush brush = new SolidBrush(myColour);
+            gfx.Clear(Color.Transparent);
+            //gfx.FillRectangle(new SolidBrush(Color.Orange), 0, 0, bmpSize, bmpSize);
+            //gfx.FillEllipse(new SolidBrush(Color.LightBlue), 2, 2, bmpSize-4, bmpSize-4);
+            gfx.FillPie(new SolidBrush(Color.Turquoise), new Rectangle(0, 0, bmpSize - 1, bmpSize - 1), 315f, 270f);
+            gfx.DrawString(txt, font, brush, 1, 1);
+
+            //for (int i = 0; i < bmp.Width; i++) {
+            //    bmp.SetPixel(i, 1, Color.White);
+            //    bmp.SetPixel(i, bmpSize-2, Color.White);
+            //}
+
+            Icon myIcon = Icon.FromHandle(bmp.GetHicon());
+            notifyIcon.Icon = myIcon;
+
+            DestroyIcon(myIcon.Handle);
+        }
+
+        private void BmpToIco() {
             Bitmap bmp = new Bitmap("Image1.bmp");
             IntPtr hicon = bmp.GetHicon();
             Icon newIcon = Icon.FromHandle(hicon);
             notifyIcon.Icon = newIcon;
             DestroyIcon(newIcon.Handle);
         }
+
 
     }
 }
