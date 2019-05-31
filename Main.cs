@@ -30,7 +30,6 @@ namespace WeatherSysTray0 {
 
             }
 
-            //menuItems = new List<MenuItem>();
             componentSysTray = new Container();
             contextMenu = new ContextMenu();
             menuItem0 = new MenuItem();
@@ -49,11 +48,10 @@ namespace WeatherSysTray0 {
             menuItem1.Click += new EventHandler(menuItem1_Click);
 
             // Create notify icon
-            notifyIcon = new NotifyIcon(componentSysTray);
-            //notifyIcon.Icon = new Icon("test.ico"); 
+            notifyIcon = new NotifyIcon(componentSysTray); 
 
             // Context menu right click
-            notifyIcon.ContextMenu = this.contextMenu;
+            notifyIcon.ContextMenu = contextMenu;
 
             // Tool tip text
             dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
@@ -62,17 +60,11 @@ namespace WeatherSysTray0 {
             // Set true
             notifyIcon.Visible = true;
 
-            // Double click handler to activate form
+            // Double click handler
             notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
 
-            //temperatureKelvin = WeatherFeed.temperatureKelvin;
             DrawStringBmp();
             StartApiTimer();
-        }
-
-        public void UpdateDateTime() {
-
-           
         }
 
         public void StartApiTimer() {
@@ -88,7 +80,9 @@ namespace WeatherSysTray0 {
             } catch {
 
             }
-            //temperatureKelvin = WeatherFeed.ExtractTemperature();
+            
+            dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
+            notifyIcon.Text = dtos.ToString("yyyy-MM-dd HH:mm:ss");
             DrawStringBmp();
         }
 
@@ -103,7 +97,6 @@ namespace WeatherSysTray0 {
 
         // Second menu item
         private void menuItem1_Click(object sender, EventArgs e) {
-            
         }
 
         private void DrawStringBmp() {
@@ -133,7 +126,7 @@ namespace WeatherSysTray0 {
 
             DestroyIcon(myIcon.Handle);
 
-            dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
+            
         }
 
         // Exit
