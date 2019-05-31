@@ -1,56 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Web;
 using System.Net;
-using System.IO;
 
 namespace WeatherSysTray0 {
     public class WeatherFeed {
-        public const double absoluteZeroDelta = 273.15;
-        private double temperature = 0;
         private static string baseUrl = @"http://api.openweathermap.org/data/2.5/";
         private static string fullUrl = @"http://api.openweathermap.org/data/2.5/weather?id=3333231&APPID=717930972ee1193baef799e1dbc45961";
-        // API key is free up to a certain amount of calls, for one city, only need to make one call per 10 minutes
-        private static string api = "717930972ee1193baef799e1dbc45961";
+        private static string rawJson;
 
-        public double Kelvin {
-            get {
-                return temperature;
-            }
-            set {
-                temperature = value;
-            }
-        }
+        public static double temperatureKelvin = 273.15;
+        // https://openweathermap.org/weather-conditions
+        public static int weatherCode = 0;
+        public static long epochTime = 0;
 
-        public double Celsius {
-            get {
-                return temperature + absoluteZeroDelta;
-            }
-        }
-
-        public double Fahrenheit {
-            get {
-                return (temperature - absoluteZeroDelta) * 9 / 5 + 32;
-            }
-        }
-
-        private static string MakeApiCall(string cityCode = "3333231") {
+        public static void MakeApiCall(string cityCode = "3333231") {
             WebClient client = new WebClient();
-            return client.DownloadString(fullUrl);
+            rawJson = client.DownloadString(fullUrl);
+            ExtractValues(rawJson);
         }
 
-        public static double ExtractTemperature() {   
-            string json = File.ReadAllText(@"D:\Projects\PythonScripts\glasgow.json"); // Raw JSON file with different types of variables          
+        public static void ExtractValues(string json) {
+            if (string.IsNullOrEmpty(json)) return;
+
             var topLevel = JsonParseOneLevel(json); // Deserialise the top level into a Dictionary<string, object>
-            string json2 = topLevel["main"].ToString(); // Take the object with the key "main" and cast it to string to get a second sub-JSON
+            string json2 = topLevel["main"].ToString(); // Take the object-value with the key "main" and cast it to string to get a second sub-JSON
             var secondLevel = JsonParseOneLevel(json2); // Deserialise this as the second level into another Dict<string, object>, although this one could be a Dict<string, double> because all the values are numbers
-            double target = Convert.ToDouble(secondLevel["temp"]); // Then use the "temp" key to get the temperature
-            Random rng = new Random();
-            return rng.Next(280, 320);
+
+            double tempTarget = Convert.ToDouble(secondLevel["temp"]); // Then use the "temp" key to get the temperature
+            temperatureKelvin = tempTarget;
+
+            long dateTimeTarget = (long)topLevel["dt"];
+            epochTime = dateTimeTarget;
+
         }
 
         public static Dictionary<string, object> JsonParseOneLevel(string json) {

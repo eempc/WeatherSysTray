@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Timers;
-using System.Threading;
 
 namespace WeatherSysTray0 {
     class Main : ApplicationContext {
@@ -22,13 +17,16 @@ namespace WeatherSysTray0 {
 
         private IContainer componentSysTray;
 
-        public double temperatureKelvin = 0;
+        private int timerLength = 15 * 60 * 1000; // minutes * seconds * milliseconds
 
         public System.Timers.Timer myTimer;
 
         public Main() {
-            temperatureKelvin = WeatherFeed.ExtractTemperature();
+            try {
+                WeatherFeed.MakeApiCall();
+            } catch {
 
+            }
 
             //menuItems = new List<MenuItem>();
             componentSysTray = new Container();
@@ -56,24 +54,31 @@ namespace WeatherSysTray0 {
             notifyIcon.ContextMenu = this.contextMenu;
 
             // Tool tip text
-            notifyIcon.Text = "Notify example";
+            notifyIcon.Text = WeatherFeed.epochTime.ToString();
             notifyIcon.Visible = true;
 
             // Double click handler to activate form
             notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+
+            //temperatureKelvin = WeatherFeed.temperatureKelvin;
             DrawStringBmp();
             StartApiTimer();
         }
 
         public void StartApiTimer() {
-            myTimer = new System.Timers.Timer(1000);
-            myTimer.Elapsed += OnTimedEvent;
+            myTimer = new System.Timers.Timer(1200000);
+            myTimer.Elapsed += MakeApiCallTimer;
             myTimer.AutoReset = true;
             myTimer.Enabled = true;
         }
 
-        public void OnTimedEvent(object sender, ElapsedEventArgs e) {
-            temperatureKelvin = WeatherFeed.ExtractTemperature();
+        public void MakeApiCallTimer(object sender, ElapsedEventArgs e) {
+            try {
+                WeatherFeed.MakeApiCall();                
+            } catch {
+
+            }
+            //temperatureKelvin = WeatherFeed.ExtractTemperature();
             DrawStringBmp();
         }
 
@@ -81,17 +86,18 @@ namespace WeatherSysTray0 {
 
         }
 
+        // Exit menu item
         private void menuItem0_Click(object sender, EventArgs e) {
            QuitApp();
         }
 
-        // Also dynamic change icon
+        // Second menu item
         private void menuItem1_Click(object sender, EventArgs e) {
-            DrawStringBmp();
+            
         }
 
         private void DrawStringBmp() {
-            string txt = Math.Round(temperatureKelvin.KelvinToCelsius()).ToString();
+            string txt = Math.Round(WeatherFeed.temperatureKelvin.KelvinToCelsius()).ToString();
             //int fontSize = 32;
             int bmpSize = 48;
             Font font = new Font("Arial", 36, GraphicsUnit.Pixel);
@@ -118,14 +124,7 @@ namespace WeatherSysTray0 {
             DestroyIcon(myIcon.Handle);
         }
 
-        private void BmpToIco() {
-            Bitmap bmp = new Bitmap("Image1.bmp");
-            IntPtr hicon = bmp.GetHicon();
-            Icon newIcon = Icon.FromHandle(hicon);
-            notifyIcon.Icon = newIcon;
-            DestroyIcon(newIcon.Handle);
-        }
-
+        // Exit
         public void QuitApp() {
             myTimer.Stop();
             myTimer.Dispose();
