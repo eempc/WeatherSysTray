@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Timers;
 
 namespace WeatherSysTray0 {
     class Main : ApplicationContext {
@@ -17,23 +18,28 @@ namespace WeatherSysTray0 {
         private ContextMenu contextMenu;
         private MenuItem menuItem0;
         private MenuItem menuItem1;
+        //private List<MenuItem> menuItems;
         private IContainer componentSysTray;
 
+        //private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        public double temperature;
+
         public Main() {
-            this.componentSysTray = new Container();
-            this.contextMenu = new ContextMenu();
-            this.menuItem0 = new MenuItem();
-            this.menuItem1 = new MenuItem();
+            //menuItems = new List<MenuItem>();
+            componentSysTray = new Container();
+            contextMenu = new ContextMenu();
+            menuItem0 = new MenuItem();
+            menuItem1 = new MenuItem();
 
             // Init context menu with an array as argument
-            this.contextMenu.MenuItems.AddRange(new MenuItem[] { this.menuItem0, this.menuItem1 });
+            contextMenu.MenuItems.AddRange(new MenuItem[] { menuItem0, menuItem1 });
 
             // Init menu item(s)
-            this.menuItem0.Index = 0;
-            this.menuItem0.Text = "Exit";
-            this.menuItem0.Click += new EventHandler(menuItem0_Click);
+            menuItem0.Index = 0;
+            menuItem0.Text = "Exit";
+            menuItem0.Click += new EventHandler(menuItem0_Click);
 
-            this.menuItem1.Index = 1;
+            menuItem1.Index = 1;
             menuItem1.Text = "Change";
             menuItem1.Click += new EventHandler(menuItem1_Click);
 
@@ -58,6 +64,11 @@ namespace WeatherSysTray0 {
             notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
         }
 
+        public void UpdateTemperatureTimer() {
+
+        }
+
+
         private void notifyIcon_DoubleClick(object sender, EventArgs e) {
             //if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
             //this.Activate();
@@ -73,7 +84,7 @@ namespace WeatherSysTray0 {
         }
 
         private void DrawStringBmp() {
-            string txt = "98";
+            string txt = WeatherFeed.ExtractTemperature().KelvinToCelsius().ToString();
             //int fontSize = 32;
             int bmpSize = 48;
             Font font = new Font("Arial", 30, GraphicsUnit.Pixel);

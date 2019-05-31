@@ -7,3 +7,6 @@ D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\WeatherSysTray0.exe
 D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\WeatherSysTray0.pdb
 D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.exe
 D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.pdb
+D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\WeatherSysTray0\WeatherSysTray0\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\WeatherSysTray0\WeatherSysTray0\obj\Debug\WeatherSysTray0.csproj.CopyComplete
