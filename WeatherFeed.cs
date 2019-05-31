@@ -49,7 +49,8 @@ namespace WeatherSysTray0 {
             string json2 = topLevel["main"].ToString(); // Take the object with the key "main" and cast it to string to get a second sub-JSON
             var secondLevel = JsonParseOneLevel(json2); // Deserialise this as the second level into another Dict<string, object>, although this one could be a Dict<string, double> because all the values are numbers
             double target = Convert.ToDouble(secondLevel["temp"]); // Then use the "temp" key to get the temperature
-            return target;
+            Random rng = new Random();
+            return rng.Next(280, 320);
         }
 
         public static Dictionary<string, object> JsonParseOneLevel(string json) {
