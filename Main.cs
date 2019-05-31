@@ -17,9 +17,11 @@ namespace WeatherSysTray0 {
 
         private IContainer componentSysTray;
 
-        private int timerLength = 15 * 60 * 1000; // minutes * seconds * milliseconds
+        //public int timerLength = 15 * 60 * 1000; // minutes * seconds * milliseconds
 
         public System.Timers.Timer myTimer;
+
+        DateTimeOffset dtos;
 
         public Main() {
             try {
@@ -54,7 +56,10 @@ namespace WeatherSysTray0 {
             notifyIcon.ContextMenu = this.contextMenu;
 
             // Tool tip text
-            notifyIcon.Text = WeatherFeed.epochTime.ToString();
+            dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
+            notifyIcon.Text = dtos.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // Set true
             notifyIcon.Visible = true;
 
             // Double click handler to activate form
@@ -63,6 +68,11 @@ namespace WeatherSysTray0 {
             //temperatureKelvin = WeatherFeed.temperatureKelvin;
             DrawStringBmp();
             StartApiTimer();
+        }
+
+        public void UpdateDateTime() {
+
+           
         }
 
         public void StartApiTimer() {
@@ -122,6 +132,8 @@ namespace WeatherSysTray0 {
             notifyIcon.Icon = myIcon;
 
             DestroyIcon(myIcon.Handle);
+
+            dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
         }
 
         // Exit

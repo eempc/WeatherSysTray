@@ -18,5 +18,7 @@ namespace WeatherSysTray0 {
         public static double FahrenheitToCelsius(this double fahrenheit) {
             return (fahrenheit - 32) * (5 / 9);
         }
+
+        
     }
 }
