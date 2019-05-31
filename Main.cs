@@ -29,6 +29,7 @@ namespace WeatherSysTray0 {
         public Main() {
             temperatureKelvin = WeatherFeed.ExtractTemperature();
 
+
             //menuItems = new List<MenuItem>();
             componentSysTray = new Container();
             contextMenu = new ContextMenu();
@@ -49,7 +50,7 @@ namespace WeatherSysTray0 {
 
             // Create notify icon
             notifyIcon = new NotifyIcon(componentSysTray);
-            notifyIcon.Icon = new Icon("test.ico"); 
+            //notifyIcon.Icon = new Icon("test.ico"); 
 
             // Context menu right click
             notifyIcon.ContextMenu = this.contextMenu;
@@ -60,7 +61,7 @@ namespace WeatherSysTray0 {
 
             // Double click handler to activate form
             notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
-
+            DrawStringBmp();
             StartApiTimer();
         }
 
@@ -73,6 +74,7 @@ namespace WeatherSysTray0 {
 
         public void OnTimedEvent(object sender, ElapsedEventArgs e) {
             temperatureKelvin = WeatherFeed.ExtractTemperature();
+            DrawStringBmp();
         }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e) {
