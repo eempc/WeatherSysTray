@@ -55,7 +55,7 @@ namespace WeatherSysTray0 {
 
             // Tool tip text
             dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
-            notifyIcon.Text = dtos.ToString("yyyy-MM-dd HH:mm:ss");
+            notifyIcon.Text = "UTC" + dtos.ToString("yyyy-MM-dd HH:mm:ss");
 
             // Set true
             notifyIcon.Visible = true;
@@ -82,7 +82,7 @@ namespace WeatherSysTray0 {
             }
             
             dtos = DateTimeOffset.FromUnixTimeSeconds(WeatherFeed.epochTime);
-            notifyIcon.Text = dtos.ToString("yyyy-MM-dd HH:mm:ss");
+            notifyIcon.Text = "UTC" + dtos.ToString("yyyy-MM-dd HH:mm:ss");
             DrawStringBmp();
         }
 
@@ -110,7 +110,10 @@ namespace WeatherSysTray0 {
             Graphics gfx = Graphics.FromImage(bmp);
 
             Brush brush = new SolidBrush(myColour);
-            gfx.Clear(Color.Transparent);
+
+            Color backgroundColour = (WeatherFeed.rainExists) ? Color.Blue : Color.Green;
+
+            gfx.Clear(backgroundColour);
             //gfx.FillRectangle(new SolidBrush(Color.Orange), 0, 0, bmpSize, bmpSize);
             //gfx.FillEllipse(new SolidBrush(Color.LightBlue), 2, 2, bmpSize-4, bmpSize-4);
             //gfx.FillPie(new SolidBrush(Color.Turquoise), new Rectangle(0, 0, bmpSize - 1, bmpSize - 1), 315f, 270f);
